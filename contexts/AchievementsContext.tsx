@@ -19,7 +19,7 @@ interface Achievement {
   name: string;
   description: string;
   condition: (p: Progress) => boolean;
-  progressFn?: (p: Progress) => string | null;
+  progressFn?: (p: Progress) => string | undefined;
 }
 
 interface AchievementsContextType {
@@ -52,14 +52,14 @@ const achievementsList: Achievement[] = [
     name: "Десятка",
     description: "Завершите 10 рабочих сессий",
     condition: (p) => p.totalWork >= 10,
-    progressFn: (p) => (p.totalWork < 10 ? `${p.totalWork}/10` : null),
+    progressFn: (p) => (p.totalWork < 10 ? `${p.totalWork}/10` : undefined),
   },
   {
     id: "hundred_pomodoro",
     name: "Сотня",
     description: "Завершите 100 рабочих сессий",
     condition: (p) => p.totalWork >= 100,
-    progressFn: (p) => (p.totalWork < 100 ? `${p.totalWork}/100` : null),
+    progressFn: (p) => (p.totalWork < 100 ? `${p.totalWork}/100` : undefined),
   },
   {
     id: "first_break",
@@ -72,7 +72,7 @@ const achievementsList: Achievement[] = [
     name: "Любитель перерывов",
     description: "Завершите 50 перерывов",
     condition: (p) => p.totalBreak >= 50,
-    progressFn: (p) => (p.totalBreak < 50 ? `${p.totalBreak}/50` : null),
+    progressFn: (p) => (p.totalBreak < 50 ? `${p.totalBreak}/50` : undefined),
   },
   {
     id: "junior_fan",
@@ -179,7 +179,7 @@ export function AchievementsProvider({ children }: { children: ReactNode }) {
   const achievements = achievementsList.map((a) => ({
     ...a,
     unlocked: a.condition(progress),
-    currentProgress: a.progressFn ? a.progressFn(progress) : undefined,
+    currentProgress: a.progressFn?.(progress),
   }));
 
   return (
