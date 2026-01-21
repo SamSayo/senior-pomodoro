@@ -17,10 +17,10 @@ const playBeep = () => {
   const ctx = new AudioContext();
   const oscillator = ctx.createOscillator();
   oscillator.type = 'square';
-  oscillator.frequency.setValueAtTime(520, ctx.currentTime); // приятный тон
+  oscillator.frequency.setValueAtTime(624, ctx.currentTime);
   oscillator.connect(ctx.destination);
   oscillator.start();
-  setTimeout(() => oscillator.stop(), 300);
+  setTimeout(() => oscillator.stop(), 200);
 };
 
 export default function PomodoroContent() {
@@ -30,7 +30,7 @@ export default function PomodoroContent() {
   const [encouragement, setEncouragement] = useState("");
   const [mode, setMode] = useState<Mode>('middle');
 
-  const { completeSession } = useAchievements(); // ← Теперь внутри Provider'а — безопасно
+  const { completeSession } = useAchievements();
 
   const prevTimeLeftRef = useRef(timeLeft);
 
